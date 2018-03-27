@@ -1,35 +1,58 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { viewBet } from '../actions/actions_fetch_bets';
+import { fetchBet } from '../actions/actions_bets'
 import { bindActionCreators } from 'redux';
-
+import { connect } from 'react-redux';
 
 class BetView extends Component {
     componentDidMount() {
-        this.props.viewBet()
+        const { id } = this.props.match.params;
+        this.props.fetchBet(id);
     }
 
     render() {
-        console.log(this.props.view_bet);
+        const { bet } = this.props;
+
+        if (!bet) {
+            return <div>loading...</div>
+        }
+console.log(bet);
         return (
-            <div>
-                One specific bet!
+            <div className="panel">
+                <div className="panel-header">
+                    <h1>{bet.description}</h1>
+                </div>
+                <div className="panel-body">
+                    <div className="row">
+                        <div className="col-sm-3">
+                            {bet.wager}
+                        </div>
+                        <div className="col-sm-3">
+                            {bet.start_date}
+                        </div>
+                        <div className="col-sm-3">
+                            {bet.end_date}
+                        </div>
+                        <div className="col-sm-3">
+                            {bet.participants}
+                        </div>
+                    </div>
+                </div>
             </div>
+
         );
     }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps({bet}) {
 
     return {
-        view_bet: state.view_bet
+        bet: bet
     };
 }
 
 function mapDispatchToProps(dispatch) {
 
-    return bindActionCreators ({viewBet}, dispatch);
-
+    return bindActionCreators ({fetchBet}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BetView);

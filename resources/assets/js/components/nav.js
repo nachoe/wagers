@@ -13,8 +13,14 @@ export default class Nav extends Component {
                         <Link className="navbar-brand" to="/">Place your bets!</Link>
                     </div>
                     <div className="navbar-collapse">
-                        <div className="navbar-form navbar-right">
-                            <Button className="btn btn-default"> Login</Button>
+
+                        <div className="navbar-form">
+                            <div className="navbar-left">
+                                <Link className="btn btn-default" to="/bet/new">Create</Link>
+                            </div>
+                            <div className="navbar-right">
+                                <Button className="btn btn-default"> Login</Button>
+                            </div>
                         </div>
                     </div>
                 </div>

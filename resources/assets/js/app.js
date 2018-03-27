@@ -12,8 +12,8 @@ require('./bootstrap');
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-require('./components/index');
+//
+// require('./components/index');
 
 
 import React from 'react';
@@ -22,7 +22,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxPromise from 'redux-promise';
 
-import Start from './components/index';
+import Nav from './components/nav'
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import BetIndex from './components/bet_index'
@@ -37,7 +37,7 @@ ReactDOM.render(
     <Provider store={createStoreWithMiddleware(reducers)}>
         <BrowserRouter>
             <div>
-                <Start/>
+                <Nav/>
                 <Switch>
                     <Route path="/bet/new" component={BetNew}/>
                     <Route path="/bet/:id" component={BetView}/>

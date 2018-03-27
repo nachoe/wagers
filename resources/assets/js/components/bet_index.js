@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchBets } from '../actions/actions_fetch_bets';
-import { viewBet } from '../actions/actions_fetch_bets';
+import { fetchBets } from '../actions/actions_bets';
 import { bindActionCreators } from 'redux';
 
 import { Link} from 'react-router-dom'
@@ -17,9 +16,8 @@ class BetIndex extends Component {
 
             return (
                 <li key={bet.id}
-                    onClick={() => this.props.viewBet(bet)}
                     className="list-group-item">
-                    <Link to={url} >{bet.description}</Link>
+                    <Link to={url}>{bet.description}</Link>
                 </li>
             );
         });
@@ -43,7 +41,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 
-    return bindActionCreators ({fetchBets, viewBet}, dispatch);
+    return bindActionCreators ({fetchBets}, dispatch);
 
 }
 
