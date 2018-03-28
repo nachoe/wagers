@@ -19,7 +19,7 @@ class BetEdit extends Component {
             <div className="row">
                 <div className="col-sm-12">
                     <h3>Edit Bet!</h3>
-                    <BetForm initialValues={bet} isEdit="true"/>
+                    <BetForm initialValues={bet} bet_id={bet.id} isEdit="true"/>
                 </div>
             </div>
         );

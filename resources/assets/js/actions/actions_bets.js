@@ -25,7 +25,7 @@ export function fetchBet(bet_id) {
 export function createBet(values, callback) {
 
     const request = axios.post('/api/bet/create', values)
-        .then(() => callback());
+        .then(callback);
 
     return {
         type: CREATE_BET,
@@ -47,7 +47,7 @@ export function deleteBet(bet_id, callback) {
 export function updateBet(values, bet_id, callback) {
 
     axios.post(`/api/bet/edit/${bet_id}`, values)
-        .then(() => callback());
+        .then(callback);
 
     return {
         type: EDIT_BET,

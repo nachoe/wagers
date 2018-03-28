@@ -45,7 +45,10 @@ class BetController extends Controller
     {
         $edit_bet = $bet->find($id);
 
-        $edit_bet->fill($request->all());
+        $arry = $request->all();
+        unset($arry['participants']);
+
+        $edit_bet->fill($arry);
         $edit_bet->save();
 
         return $edit_bet;
@@ -64,7 +67,7 @@ class BetController extends Controller
         foreach ($bets as $bet) {
             $returned_bets[] = $this->getParticipants($bet);
         }
-//dd($returned_bets);die;
+
         return response()->json($returned_bets);
     }
 

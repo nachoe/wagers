@@ -18,8 +18,8 @@ class BetForm extends Component {
 
     onSubmit(values) {
         if (this.props.isEdit) {
-            const {id} = this.props.bet;
-            this.props.updateBet(values, id, () => {
+            const {bet_id} = this.props;
+            this.props.updateBet(values, bet_id, () => {
                 this.setState({ fireRedirect: true })
             });
         } else {
@@ -100,4 +100,4 @@ function mapDispatchToProps(dispatch) {
 export default reduxForm({
     form: 'betForm',
     validate
-})(connect(mapDispatchToProps)(BetForm));
+})(connect(null, mapDispatchToProps)(BetForm));

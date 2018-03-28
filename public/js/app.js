@@ -18272,9 +18272,7 @@ function fetchBet(bet_id) {
 
 function createBet(values, callback) {
 
-    var request = __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/bet/create', values).then(function () {
-        return callback();
-    });
+    var request = __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/bet/create', values).then(callback);
 
     return {
         type: __WEBPACK_IMPORTED_MODULE_1__types__["a" /* CREATE_BET */],
@@ -18296,9 +18294,7 @@ function deleteBet(bet_id, callback) {
 
 function updateBet(values, bet_id, callback) {
 
-    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/bet/edit/' + bet_id, values).then(function () {
-        return callback();
-    });
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/bet/edit/' + bet_id, values).then(callback);
 
     return {
         type: __WEBPACK_IMPORTED_MODULE_1__types__["e" /* EDIT_BET */],
@@ -22685,9 +22681,9 @@ var BetForm = function (_Component) {
             var _this2 = this;
 
             if (this.props.isEdit) {
-                var id = this.props.bet.id;
+                var bet_id = this.props.bet_id;
 
-                this.props.updateBet(values, id, function () {
+                this.props.updateBet(values, bet_id, function () {
                     _this2.setState({ fireRedirect: true });
                 });
             } else {
@@ -22786,7 +22782,7 @@ function mapDispatchToProps(dispatch) {
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_redux_form__["c" /* reduxForm */])({
     form: 'betForm',
     validate: validate
-})(Object(__WEBPACK_IMPORTED_MODULE_5_react_redux__["b" /* connect */])(mapDispatchToProps)(BetForm)));
+})(Object(__WEBPACK_IMPORTED_MODULE_5_react_redux__["b" /* connect */])(null, mapDispatchToProps)(BetForm)));
 
 /***/ }),
 /* 97 */
@@ -69502,7 +69498,7 @@ var BetEdit = function (_Component) {
                         null,
                         'Edit Bet!'
                     ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__bet_form__["a" /* default */], { initialValues: bet, isEdit: 'true' })
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__bet_form__["a" /* default */], { initialValues: bet, bet_id: bet.id, isEdit: 'true' })
                 )
             );
         }
