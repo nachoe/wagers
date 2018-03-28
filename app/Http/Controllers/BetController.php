@@ -11,16 +11,21 @@ class BetController extends Controller
     public function show(Bet $bet, $id = null)
     {
         $this_bet = $bet->find($id);
-        $participants = [];
-        foreach ($this_bet->participants as $participant) {
-            $user_id = $participant->created_by_id;
-            $user = User::find($user_id);
+//        $participants = [];
+//        foreach ($this_bet->participants as $participant) {
+//            $user_id = $participant->created_by_id;
+//            $user = User::find($user_id);
+//
+//            $participants[$participant->id] = [
+//                'name' => $user->name,
+//                'placed_bet' => $participant->placed_bet,
+//            ];
+//        }
+//        unset($this_bet->participants);
+//
+//        $return = array_merge($this_bet->toArray(), ['participants'=> $participants]);
 
-            $participants[] = $user->name;
-        }
-        unset($this_bet->participants);
-
-        return array_merge($this_bet->toArray(), ['participants'=> $participants]);
+        return $this->getParticipants($this_bet);
     }
 
     public function create(Request $request)
@@ -57,18 +62,26 @@ class BetController extends Controller
         $bets = Bet::all();
         $returned_bets = [];
         foreach ($bets as $bet) {
-            $participants = [];
-            foreach ($bet->participants as $participant) {
-                $user_id = $participant->created_by_id;
-                $user = User::find($user_id);
-
-                $participants[] = $user->name;
-            }
-            unset($bet->participants);
-
-            $returned_bets[] = array_merge($bet->toArray(), ['participants'=> $participants]);;
+            $returned_bets[] = $this->getParticipants($bet);
         }
+//dd($returned_bets);die;
+        return response()->json($returned_bets);
+    }
 
-        return $returned_bets;
+    private function getParticipants($bet)
+    {
+        $participants = [];
+        foreach ($bet->participants as $participant) {
+            $user_id = $participant->created_by_id;
+            $user = User::find($user_id);
+
+            $participants[$participant->id] = [
+                'name' => $user->name,
+                'placed_bet' => $participant->placed_bet,
+            ];
+        }
+        unset($bet->participants);
+
+        return array_merge($bet->toArray(), ['participants'=> $participants]);
     }
 }

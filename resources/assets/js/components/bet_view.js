@@ -3,7 +3,7 @@ import {fetchBet, deleteBet} from '../actions/actions_bets'
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-
+import ParticipantList from './participant_list'
 
 class BetView extends Component {
     componentDidMount() {
@@ -28,6 +28,12 @@ class BetView extends Component {
         const edit_url =  `/bet/edit/${bet.id}`;
         const join_url =  `/bet/${bet.id}/join`;
 
+        let participants = _.map(bet.participants, participant => {
+            return (
+                <ParticipantList key={participant.name} participant={participant}/>
+            );
+        });
+
         return (
             <div className="panel panel-default">
                 <div className="panel-heading">
@@ -36,7 +42,7 @@ class BetView extends Component {
                             <h1>{bet.title}</h1>
                         </div>
                         <div className="col-sm-5 text-right">
-                            <button className="btn btn-default" onClick={this.onDelete.bind(this)}>Delete</button>
+                            {/*<button className="btn btn-default" onClick={this.onDelete.bind(this)}>Delete</button>*/}
                             <Link className="btn btn-default" to={edit_url}>Edit</Link>
                             <Link className="btn btn-default" to={join_url}>Join</Link>
                         </div>
@@ -54,7 +60,7 @@ class BetView extends Component {
                             {bet.created_at}
                         </div>
                         <div className="col-sm-3">
-                            {bet.participants}
+                            {participants}
                         </div>
                     </div>
                 </div>

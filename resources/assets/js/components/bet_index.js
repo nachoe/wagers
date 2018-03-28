@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import { fetchBets } from '../actions/actions_bets';
 import { bindActionCreators } from 'redux';
 
+import ParticipantList from './participant_list'
+
 import { Link} from 'react-router-dom'
+import _ from 'lodash';
 
 class BetIndex extends Component {
     componentDidMount() {
@@ -14,10 +17,18 @@ class BetIndex extends Component {
         return _.map(this.props.bets, bet => {
             const view_url = "/bet/view/" + bet.id;
 
+            let participants = _.map(bet.participants, participant => {
+                return (
+                    <ParticipantList key={participant.name} participant={participant}/>
+                );
+            });
+
             return (
                 <li key={bet.id}
                     className="list-group-item">
-                    <Link to={view_url}>{bet.title}</Link> <small>{bet.description} // {bet.participants}</small>
+                    <Link to={view_url}>{bet.title}</Link>
+                    <small>{bet.description} <br/> {participants}</small>
+
                 </li>
             );
         });
