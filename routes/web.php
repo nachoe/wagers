@@ -11,70 +11,23 @@
 |
 */
 
-$all_bets = [
-    1 => [
-        'created_by' => 'Jesse Matlock',
-        'id' => '1',
-        'description' => 'Lakers final record',
-        'wager' => '$10',
-        'participants' => [
-            0 => 'Mike Webber',
-            1 => 'Joe Matlock',
-            2 => 'Johnny Matlock',
-        ],
-        'start_date' => 'January 12th, 2018',
-        'end_date' => 'May 20th 2018',
-        'winner' => null,
-    ],
-    2 => [
-        'created_by' => 'Johnny Matlock',
-        'id' => '2',
-        'description' => 'Angels final record',
-        'wager' => '$10',
-        'participants' => [
-            0 => 'Mike Webber',
-            1 => 'Joe Matlock',
-            2 => 'Johnny Matlock',
-        ],
-        'start_date' => 'January 12th, 2018',
-        'end_date' => 'May 20th 2018',
-        'winner' => null,
-    ],
-    3 => [
-        'created_by' => 'Joe Matlock',
-        'id' => '3',
-        'description' => 'Yankees final record',
-        'wager' => '$10',
-        'participants' => [
-            0 => 'Mike Webber',
-            1 => 'Joe Matlock',
-            2 => 'Johnny Matlock',
-        ],
-        'start_date' => 'January 12th, 2018',
-        'end_date' => 'May 20th 2018',
-        'winner' => null,
-    ],
-    4 => ['created_by' => 'Mike Webber',
-        'id' => '4',
-        'description' => 'APs total Homeruns',
-        'wager' => '$10',
-        'participants' => [
-            0 => 'Mike Webber',
-            1 => 'Joe Matlock',
-            2 => 'Jesse Matlock',
-        ],
-        'start_date' => 'January 12th, 2018',
-        'end_date' => 'May 20th 2018',
-        'winner' => null,
-    ]
-];
 
-Route::get('{reactRoutes}', function () {
-    return view('index'); // your start view
-})->where('reactRoutes', '^((?!api).)*$'); // except 'api' word
+Route::get('/logout', 'Auth\LoginController@logout');
 
-Route::get('api/bets', 'ReactController@showAll');
+Auth::routes();
 
-Route::post('api/bet/create', 'ReactController@create');
+Route::get('api/bets', 'ReactController@showAll')->name('all-bets');
 
-Route::get('api/bet/view/{id}', 'ReactController@show');
+Route::post('api/bet/create', 'ReactController@create')->name('create-bet');
+
+Route::get('api/bet/view/{id}', 'ReactController@show')->name('view-bet');
+
+Route::post('api/bet/edit/{id}', 'ReactController@edit')->name('edit-bet');
+
+Route::post('api/bet/delete/{id}', 'ReactController@delete')->name('delete-bet');
+
+Route::get('/{path?}', [
+    'uses' => 'HomeController@index',
+    'as' => 'react',
+    'where' => ['path' => '.*']
+])->name('react-home');

@@ -1,12 +1,22 @@
-import React, { Component } from 'react';
-import { fetchBet } from '../actions/actions_bets'
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {fetchBet, deleteBet} from '../actions/actions_bets'
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+
 
 class BetView extends Component {
     componentDidMount() {
         const { id } = this.props.match.params;
         this.props.fetchBet(id);
+    }
+
+    onDelete() {
+        const { id } = this.props.match.params;
+
+        this.props.deleteBet(id, () => {
+            this.props.history.push('/');
+        });
     }
 
     render() {
@@ -15,11 +25,24 @@ class BetView extends Component {
         if (!bet) {
             return <div>loading...</div>
         }
-console.log(bet);
+        const edit_url =  `/bet/edit/${bet.id}`;
+        const join_url =  `/bet/join/${bet.id}/1`;
+        console.log(bet);
         return (
-            <div className="panel">
-                <div className="panel-header">
-                    <h1>{bet.description}</h1>
+            <div className="panel panel-default">
+                <div className="panel-heading">
+                    <div className="row">
+                        <div className="col-sm-7">
+
+                            <h1>{bet.title}</h1>
+                        </div>
+                        <div className="col-sm-5 text-right">
+                            <button className="btn btn-default" onClick={this.onDelete.bind(this)}>Delete</button>
+                            <Link className="btn btn-default" to={edit_url}>Edit</Link>
+                            <Link className="btn btn-default" to={join_url}>Join</Link>
+                        </div>
+                    </div>
+
                 </div>
                 <div className="panel-body">
                     <div className="row">
@@ -27,10 +50,10 @@ console.log(bet);
                             {bet.wager}
                         </div>
                         <div className="col-sm-3">
-                            {bet.start_date}
+                            {bet.description}
                         </div>
                         <div className="col-sm-3">
-                            {bet.end_date}
+                            {bet.created_at}
                         </div>
                         <div className="col-sm-3">
                             {bet.participants}
@@ -52,7 +75,7 @@ function mapStateToProps({bet}) {
 
 function mapDispatchToProps(dispatch) {
 
-    return bindActionCreators ({fetchBet}, dispatch);
+    return bindActionCreators ({fetchBet, deleteBet}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BetView);

@@ -1,3 +1,6 @@
+@extends('layouts.app')
+
+@section('content')
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
 <head>
@@ -9,8 +12,14 @@
     <title>React!</title>
 </head>
 <body>
-    <div class="container"></div>
+    <div class="app-container"></div>
+
+
+    {{--@TODO finish adding these routes--}}
+    @routes
+    <script src="{{url('')}}/js/app.js"></script>
+
 </body>
 
-<script src="{{url('')}}/js/app.js"></script>
 </html>
+@endsection

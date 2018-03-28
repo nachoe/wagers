@@ -28,6 +28,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import BetIndex from './components/bet_index'
 import BetNew from './components/bet_new'
 import BetView from './components/bet_view'
+import BetEdit from './components/bet_edit'
+import BetJoin from './components/bet_join'
 
 import reducers from './reducers';
 
@@ -36,14 +38,16 @@ const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 ReactDOM.render(
     <Provider store={createStoreWithMiddleware(reducers)}>
         <BrowserRouter>
-            <div>
+            <div className="container">
                 <Nav/>
                 <Switch>
                     <Route path="/bet/new" component={BetNew}/>
-                    <Route path="/bet/:id" component={BetView}/>
+                    <Route path="/bet/edit/:id" component={BetEdit}/>
+                    <Route path="/bet/join/:bet_id/:p_id" component={BetJoin}/>
+                    <Route path="/bet/view/:id" component={BetView}/>
                     <Route path="/" component={BetIndex}/>
                 </Switch>
             </div>
         </BrowserRouter>
     </Provider>
-    , document.querySelector('.container'));
+    , document.querySelector('.app-container'));

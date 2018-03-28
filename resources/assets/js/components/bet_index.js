@@ -12,12 +12,12 @@ class BetIndex extends Component {
 
     renderList() {
         return _.map(this.props.bets, bet => {
-            const url = "/bet/" + bet.id;
+            const view_url = "/bet/view/" + bet.id;
 
             return (
                 <li key={bet.id}
                     className="list-group-item">
-                    <Link to={url}>{bet.description}</Link>
+                    <Link to={view_url}>{bet.title}</Link> <small>{bet.description}</small>
                 </li>
             );
         });
