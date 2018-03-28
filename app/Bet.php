@@ -22,7 +22,7 @@ class Bet extends Model
 
     public function participants()
     {
-        return $this->morphMany(User::class, 'participants');
+        return $this->hasMany('App\Participant');
     }
 }
 

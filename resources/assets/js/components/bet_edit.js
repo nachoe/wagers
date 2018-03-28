@@ -1,23 +1,25 @@
 import React, { Component } from 'react';
 import BetForm from './bet_form'
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {fetchBet} from '../actions/actions_bets'
+import { fetchBet } from '../actions/actions_bets'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import _ from 'lodash';
 
 class BetEdit extends Component {
-    componentDidMount(){
+    componentDidMount() {
         this.props.fetchBet(this.props.match.params.id)
     }
 
     render() {
-        if (!this.props.bet) {
-            return <div></div>;
+        if (_.isEmpty(this.props.bet)) {
+            return <div></div>
         }
+        const {bet} = this.props;
         return (
             <div className="row">
                 <div className="col-sm-12">
                     <h3>Edit Bet!</h3>
-                    <BetForm bet={this.props.bet} isEdit="true"/>
+                    <BetForm initialValues={bet} isEdit="true"/>
                 </div>
             </div>
         );
@@ -27,13 +29,14 @@ class BetEdit extends Component {
 function mapStateToProps({bet}) {
 
     return {
-        bet: bet
+        bet: bet,
     };
 }
 
 function mapDispatchToProps(dispatch) {
 
     return bindActionCreators ({fetchBet}, dispatch);
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BetEdit);

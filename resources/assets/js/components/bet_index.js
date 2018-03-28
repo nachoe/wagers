@@ -17,7 +17,7 @@ class BetIndex extends Component {
             return (
                 <li key={bet.id}
                     className="list-group-item">
-                    <Link to={view_url}>{bet.title}</Link> <small>{bet.description}</small>
+                    <Link to={view_url}>{bet.title}</Link> <small>{bet.description} // {bet.participants}</small>
                 </li>
             );
         });

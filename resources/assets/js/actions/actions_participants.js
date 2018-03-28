@@ -14,7 +14,7 @@ export function fetchParticipants() {
 
 export function fetchParticipant(bet_id) {
 
-    const request = axios.get(`/api/participants/view/${bet_id}`);
+    const request = axios.get(`/api/participant/fetch/${bet_id}`);
 
     return {
         type: FETCH_PARTICIPANT,
@@ -22,9 +22,9 @@ export function fetchParticipant(bet_id) {
     };
 }
 
-export function createParticipant(values, callback) {
+export function createParticipant(values, bet_id, callback) {
 
-    const request = axios.post('/api/participants/create', values)
+    const request = axios.post(`/api/participant/create/${bet_id}`, values)
         .then(() => callback());
 
     return {
@@ -35,7 +35,7 @@ export function createParticipant(values, callback) {
 
 export function deleteParticipant(bet_id, callback) {
 
-    axios.post(`/api/participants/delete/${bet_id}`)
+    axios.post(`/api/participant/delete/${bet_id}`)
         .then(() => callback());
 
     return {
@@ -44,13 +44,13 @@ export function deleteParticipant(bet_id, callback) {
     }
 }
 
-export function updateParticipant(values, bet_id, callback) {
+export function updateParticipant(values, p_id, callback) {
 
-    axios.post(`/api/participants/edit/${bet_id}`, values)
+    axios.post(`/api/participant/edit/${p_id}`, values)
         .then(() => callback());
 
     return {
         type: EDIT_PARTICIPANT,
-        payload: bet_id
+        payload: p_id
     }
 }

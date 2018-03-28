@@ -39,6 +39,7 @@ class ReactController extends Controller
     public function delete(Bet $bet, Request $request, $id = null)
     {
         $deleted_bet = $bet->find($id);
+        return $deleted_bet;
     }
 
     public function showAll()
@@ -46,68 +47,4 @@ class ReactController extends Controller
         $issues = Bet::all();
         return $issues;
     }
-
-
-    private $all_bets = [
-        1 => [
-            'created_by' => 'Jesse Matlock',
-            'id' => '1',
-            'title' => 'Lakers final record',
-            'description' => 'Lakers final record',
-            'wager' => '$10',
-            'participants' => [
-                0 => 'Mike Webber',
-                1 => 'Joe Matlock',
-                2 => 'Johnny Matlock',
-            ],
-            'start_date' => 'January 12th, 2018',
-            'end_date' => 'May 20th 2018',
-            'winner' => null,
-        ],
-        2 => [
-            'created_by' => 'Johnny Matlock',
-            'id' => '2',
-            'title' => 'Angels final record',
-            'description' => 'Angels final record',
-            'wager' => '$10',
-            'participants' => [
-                0 => 'Mike Webber',
-                1 => 'Joe Matlock',
-                2 => 'Johnny Matlock',
-            ],
-            'start_date' => 'January 12th, 2018',
-            'end_date' => 'May 20th 2018',
-            'winner' => null,
-        ],
-        3 => [
-            'created_by' => 'Joe Matlock',
-            'id' => '3',
-            'title' => 'Yankees final record',
-            'description' => 'Yankees final record',
-            'wager' => '$10',
-            'participants' => [
-                0 => 'Mike Webber',
-                1 => 'Joe Matlock',
-                2 => 'Johnny Matlock',
-            ],
-            'start_date' => 'January 12th, 2018',
-            'end_date' => 'May 20th 2018',
-            'winner' => null,
-        ],
-        4 => ['created_by' => 'Mike Webber',
-            'id' => '4',
-            'title' => 'APs total Homeruns',
-            'description' => 'APs total Homeruns',
-            'wager' => '$10',
-            'participants' => [
-                0 => 'Mike Webber',
-                1 => 'Joe Matlock',
-                2 => 'Jesse Matlock',
-            ],
-            'start_date' => 'January 12th, 2018',
-            'end_date' => 'May 20th 2018',
-            'winner' => null,
-        ]
-    ];
-
 }

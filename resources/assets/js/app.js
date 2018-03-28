@@ -21,6 +21,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxPromise from 'redux-promise';
+import thunk from 'redux-thunk';
 
 import Nav from './components/nav'
 
@@ -29,11 +30,11 @@ import BetIndex from './components/bet_index'
 import BetNew from './components/bet_new'
 import BetView from './components/bet_view'
 import BetEdit from './components/bet_edit'
-import BetJoin from './components/bet_join'
+import BetParticipant from './components/bet_participant'
 
 import reducers from './reducers';
 
-const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
+const createStoreWithMiddleware = applyMiddleware(ReduxPromise, thunk)(createStore);
 
 ReactDOM.render(
     <Provider store={createStoreWithMiddleware(reducers)}>
@@ -43,7 +44,7 @@ ReactDOM.render(
                 <Switch>
                     <Route path="/bet/new" component={BetNew}/>
                     <Route path="/bet/edit/:id" component={BetEdit}/>
-                    <Route path="/bet/join/:bet_id/:p_id" component={BetJoin}/>
+                    <Route path="/bet/:bet_id/join/:p_id?" component={BetParticipant}/>
                     <Route path="/bet/view/:id" component={BetView}/>
                     <Route path="/" component={BetIndex}/>
                 </Switch>

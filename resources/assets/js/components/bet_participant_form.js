@@ -5,8 +5,9 @@ import { Link, Redirect } from 'react-router-dom'
 import { updateParticipant, createParticipant} from '../actions/actions_participants'
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import {renderField} from '../form/render_field'
 
-class NewComp extends Component {
+class BetParticipantForm extends Component {
     constructor(props) {
         super(props);
 
@@ -15,43 +16,16 @@ class NewComp extends Component {
         }
     }
 
-    componentDidMount() {
-        if (!_.isEmpty(this.props.participant)) {
-            this.handleInitialize();
-        }
-    }
-
-    handleInitialize() {
-        const initData = {
-            "placed_bet": this.props.participant.placed_bet
-        };
-
-        this.props.initialize(initData);
-    }
-
-    renderField(field) {
-        const {meta: {touched, error}} = field;
-        const className = `form-group ${touched && error ? 'has-danger' : ''}`;
-        return (
-            <div className={className}>
-                <label htmlFor="">{field.label}</label>
-                <input
-                    className="form-control"
-                    {...field.input}
-                />
-                <span className="text-danger">{touched ? error : ''}</span>
-            </div>
-        );
-    }
-
     onSubmit(values) {
-        if (this.props.isEdit) {
-            const {id} = this.props.bet;
-            this.props.updateBet(values, id, () => {
+        const {bet_id} = this.props;
+
+        if (!_.isEmpty(this.props.participant)) {
+
+            this.props.updateParticipant(values, bet_id, () => {
                 this.setState({ fireRedirect: true })
             });
         } else {
-            this.props.createBet(values, () => {
+            this.props.createParticipant(values, bet_id, () => {
                 this.setState({ fireRedirect: true })
             });
         }
@@ -67,12 +41,11 @@ class NewComp extends Component {
 
         return (
             <div>
-
                 <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                     <Field
                         name="placed_bet"
                         label="What is your guess"
-                        component={this.renderField}
+                        component={renderField}
                     />
                     <div className="row">
                         <div className="col-xs-6 text-left">
@@ -116,6 +89,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default reduxForm({
-    form: 'betForm',
+    form: 'participantForm',
     validate
-})(connect(null, mapDispatchToProps)(NewComp));
+})(connect(null, mapDispatchToProps)(BetParticipantForm));

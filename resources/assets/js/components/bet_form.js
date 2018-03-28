@@ -4,46 +4,16 @@ import { bindActionCreators } from 'redux';
 import { Link, Redirect } from 'react-router-dom'
 import { updateBet, createBet} from '../actions/actions_bets'
 import { connect } from 'react-redux';
+import {renderField} from '../form/render_field'
 
-class NewComp extends Component {
+
+class BetForm extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            fireRedirect: false
-        }
-    }
-
-    componentDidMount() {
-        if (this.props.isEdit) {
-            this.handleInitialize();
-        }
-    }
-
-    handleInitialize() {
-        const initData = {
-            "title": this.props.bet.title,
-            "description": this.props.bet.description,
-            "notes": this.props.bet.notes,
-            "wager": this.props.bet.wager
+            fireRedirect: false,
         };
-
-        this.props.initialize(initData);
-    }
-
-    renderField(field) {
-        const {meta: {touched, error}} = field;
-        const className = `form-group ${touched && error ? 'has-danger' : ''}`;
-        return (
-            <div className={className}>
-                <label htmlFor="">{field.label}</label>
-                <input
-                    className="form-control"
-                    {...field.input}
-                />
-                <span className="text-danger">{touched ? error : ''}</span>
-            </div>
-        );
     }
 
     onSubmit(values) {
@@ -60,46 +30,41 @@ class NewComp extends Component {
     }
 
     render() {
-        if (this.props.isEdit && !this.props.bet) {
-            return <div></div>;
-        }
-
         const { handleSubmit } = this.props;
         const { fireRedirect } = this.state;
 
         return (
             <div>
-
-            <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                <Field
-                    name="title"
-                    label="Title"
-                    component={this.renderField}
-                />
-                <Field
-                    name="description"
-                    label="Description"
-                    component={this.renderField}
-                />
-                <Field
-                    name="notes"
-                    label="Notes"
-                    component={this.renderField}
-                />
-                <Field
-                    name="wager"
-                    label="Wager"
-                    component={this.renderField}
-                />
-                <div className="row">
-                    <div className="col-xs-6 text-left">
-                        <button className="btn btn-default" type="submit">Submit</button>
+                <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+                    <Field
+                        name="title"
+                        label="Title"
+                        component={renderField}
+                    />
+                    <Field
+                        name="description"
+                        label="Description"
+                        component={renderField}
+                    />
+                    <Field
+                        name="notes"
+                        label="Notes"
+                        component={renderField}
+                    />
+                    <Field
+                        name="wager"
+                        label="Wager"
+                        component={renderField}
+                    />
+                    <div className="row">
+                        <div className="col-xs-6 text-left">
+                            <button className="btn btn-default" type="submit">Submit</button>
+                        </div>
+                        <div className="col-xs-6 text-right">
+                            <Link className="btn btn-danger" to="/">Cancel</Link>
+                        </div>
                     </div>
-                    <div className="col-xs-6 text-right">
-                        <Link className="btn btn-danger" to="/">Cancel</Link>
-                    </div>
-                </div>
-            </form>
+                </form>
                 {fireRedirect && (
                     <Redirect to={'/'}/>
                 )}
@@ -135,4 +100,4 @@ function mapDispatchToProps(dispatch) {
 export default reduxForm({
     form: 'betForm',
     validate
-})(connect(null, mapDispatchToProps)(NewComp));
+})(connect(mapDispatchToProps)(BetForm));

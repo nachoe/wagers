@@ -20,9 +20,9 @@ class Participant extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function participants()
+    public function bets()
     {
-        return $this->morphMany(User::class, 'participants');
+        return $this->belongsTo('App\Bet');
     }
 }
 

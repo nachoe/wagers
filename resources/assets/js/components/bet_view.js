@@ -26,14 +26,13 @@ class BetView extends Component {
             return <div>loading...</div>
         }
         const edit_url =  `/bet/edit/${bet.id}`;
-        const join_url =  `/bet/join/${bet.id}/1`;
-        console.log(bet);
+        const join_url =  `/bet/${bet.id}/join`;
+
         return (
             <div className="panel panel-default">
                 <div className="panel-heading">
                     <div className="row">
                         <div className="col-sm-7">
-
                             <h1>{bet.title}</h1>
                         </div>
                         <div className="col-sm-5 text-right">
@@ -42,7 +41,6 @@ class BetView extends Component {
                             <Link className="btn btn-default" to={join_url}>Join</Link>
                         </div>
                     </div>
-
                 </div>
                 <div className="panel-body">
                     <div className="row">
